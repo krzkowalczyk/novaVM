@@ -1,0 +1,37 @@
+<h1>Welcome to nova!</h1>
+<div class="form-container">
+  <mat-form-field>
+    <mat-select placeholder="Choose organization" [(ngModel)]="selectedOrganization" name="organization">
+      <mat-option *ngFor="let org of organization" [value]="org.value">
+        {{org.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Choose environment" [(ngModel)]="selectedEnvironment" name="environment">
+      <mat-option *ngFor="let env of environment" [value]="env.value">
+        {{env.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" placeholder="Pick BSI" aria-label="BSI" matInput [formControl]="bsiControl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <!-- Cpu -->
+  <p> CPU: {{cpu.value}} </p>
+  <mat-slider #cpu thumbLabel tickInterval="1" min="1" max="8"></mat-slider>
+
+  <!-- ram -->
+  <p> RAM: {{ram.value}} </p>
+  <mat-slider #ram thumbLabel tickInterval="1" min="1" max="32"></mat-slider>
+
+  <p> Selected value: {{selectedEnvironment}} </p>
+</div>

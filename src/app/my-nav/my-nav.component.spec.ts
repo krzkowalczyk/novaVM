@@ -2,6 +2,8 @@
 import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MyNavComponent } from './my-nav.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule, MatListModule, MatIconModule } from '@angular/material';
 
 describe('MyNavComponent', () => {
   let component: MyNavComponent;
@@ -9,7 +11,7 @@ describe('MyNavComponent', () => {
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      imports: [MatSidenavModule],
+      imports: [BrowserAnimationsModule, MatSidenavModule, MatToolbarModule, MatListModule, MatIconModule],
       declarations: [MyNavComponent]
     })
     .compileComponents();
