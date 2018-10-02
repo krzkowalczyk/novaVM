@@ -9,8 +9,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatToolbarModule, MatButtonModule, MatSidenavModule,
   MatIconModule, MatListModule, MatSelectModule, MatInputModule,
-  MatAutocompleteModule, MatSliderModule
-        } from '@angular/material';
+  MatAutocompleteModule, MatSliderModule, MatStepperModule, MatExpansionModule, MatSlideToggleModule,
+  MatRadioModule
+} from '@angular/material';
 import { InputFormComponent } from './input-form/input-form.component';
 
 @NgModule({
@@ -33,7 +34,11 @@ import { InputFormComponent } from './input-form/input-form.component';
     MatSelectModule,
     MatInputModule,
     MatAutocompleteModule,
-    MatSliderModule
+    MatSliderModule,
+    MatStepperModule,
+    MatExpansionModule,
+    MatSlideToggleModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

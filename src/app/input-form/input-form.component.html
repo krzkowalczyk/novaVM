@@ -1,37 +1,93 @@
 <h1>Welcome to nova!</h1>
 <div class="form-container">
-  <mat-form-field>
-    <mat-select placeholder="Choose organization" [(ngModel)]="selectedOrganization" name="organization">
-      <mat-option *ngFor="let org of organization" [value]="org.value">
-        {{org.viewValue}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-select placeholder="Choose environment" [(ngModel)]="selectedEnvironment" name="environment">
-      <mat-option *ngFor="let env of environment" [value]="env.value">
-        {{env.viewValue}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field>
-    <input type="text" placeholder="Pick BSI" aria-label="BSI" matInput [formControl]="bsiControl" [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{option}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-
-  <!-- Cpu -->
-  <p> CPU: {{cpu.value}} </p>
-  <mat-slider #cpu thumbLabel tickInterval="1" min="1" max="8"></mat-slider>
-
-  <!-- ram -->
-  <p> RAM: {{ram.value}} </p>
-  <mat-slider #ram thumbLabel tickInterval="1" min="1" max="32"></mat-slider>
-
   <p> Selected value: {{selectedEnvironment}} </p>
 </div>
+
+<mat-vertical-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>General Config</ng-template>
+      <mat-form-field>
+        <mat-select placeholder="Choose organization" [(ngModel)]="selectedOrganization" name="organization" formControlName="firstCtrl" required>
+          <mat-option *ngFor="let org of organization" [value]="org.value">
+            {{org.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <mat-form-field>
+          <mat-select placeholder="Choose environment" [(ngModel)]="selectedEnvironment" name="environment" formControlName="thirdCtrl" required>
+            <mat-option *ngFor="let env of environment" [value]="env.value">
+              {{env.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input type="text" placeholder="Pick BSI" aria-label="BSI" matInput [formControl]="bsiControl" [matAutocomplete]="auto" required>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Hardware</ng-template>
+
+      <!-- Cpu -->
+      <p> CPU: {{cpu.value}} </p>
+      <mat-slider #cpu thumbLabel tickInterval="1" min="1" max="8"></mat-slider>
+
+      <!-- ram -->
+      <p> RAM: {{ram.value}} </p>
+      <mat-slider #ram thumbLabel tickInterval="1" min="1" max="32"></mat-slider>
+
+      <!-- HDD -->
+      <p> HDD size (GB): {{hdd.value}} </p>
+      <mat-slider #hdd thumbLabel tickInterval="1" min="0" max="50"></mat-slider>
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="networkInterfacesGroup">
+    <form [formGroup]="networkInterfacesGroup">
+      <ng-template matStepLabel>Network Interfaces</ng-template>
+      <mat-form-field>
+        <mat-select placeholder="Choose vlan" [(ngModel)]="selectedVlan" name="vlan" formControlName="firstCtrl" required>
+          <mat-option *ngFor="let v of vlan" [value]="v.value">
+            {{v.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <mat-radio-group>
+          <mat-radio-button value="auto" checked>Auto IP</mat-radio-button>
+          <mat-radio-button value="static">Static IP</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>

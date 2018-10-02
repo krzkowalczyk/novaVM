@@ -14,3 +14,11 @@
 .mat-slider-vertical {
   height: 300px;
 }
+
+.mat-select > * {
+  padding: 30px;
+}
+
+.mat-radio-button {
+  padding: 10px
+}
